@@ -27,7 +27,7 @@ class AntAgent(Agent):
 			if grid[self.xPos][self.yPos][1] < 100*((self.health/self.maxHealth)**5):
 				grid[self.xPos][self.yPos][1] = 100*((self.health/self.maxHealth)**5)
 			#
-			
+
 			noSugar = True
 			for i in range(8):
 				[x,y] = currPos + self.dirList[i]
@@ -38,10 +38,10 @@ class AntAgent(Agent):
 					self.xPos = x%modS
 					self.yPos = y%modS
 					noSugar = False
-					#[x,y] = sugar position			
+					#[x,y] = sugar position
 				#
 			#
-			
+
 			if noSugar:
 				bestPhero = 0
 				bestI = 2
@@ -63,14 +63,14 @@ class AntAgent(Agent):
 						self.direction = self.direction+i-2
 						break
 					else:
-						picked -= weights[i]		
+						picked -= weights[i]
 					#
-				# look for food pheromones
+		# look for food pheromones
 		else:
 			if (grid[self.xPos][self.yPos][0] < 3):
 				grid[self.xPos][self.yPos][0] += 1
 			#
-			
+
 			bestPhero = 0
 			bestI = 2
 			for i in range(5):
@@ -80,7 +80,7 @@ class AntAgent(Agent):
 					bestPhero = grid[x%modS][y%modS][1]
 				#
 			#
-			
+
 			weights[bestI] = focusOnPheroParameter
 			totWeight = np.sum(weights)	
 			picked = np.random.random_integers(0,totWeight-1)

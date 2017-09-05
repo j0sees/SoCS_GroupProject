@@ -70,7 +70,7 @@ def main():
 			plotInfo[i][j] = [0,0,0] #[state, health, SugarAmount]
 		#
 	#
-	
+
 	#===========================================================================
 	# Initialization of the sugar
 	#===========================================================================
@@ -79,7 +79,6 @@ def main():
 	plotInfo[5][5][2] = maxFoodAmount
 	gridInfo[35][5][2] = maxFoodAmount
 	plotInfo[35][5][2] = maxFoodAmount
-	
 
 	for it in range(nIterations):
 		if(it%200 == 199):
@@ -99,7 +98,7 @@ def main():
 			Agents.append(AntAgent(xPos, yPos, lifeTime))
 			nbrHuman += 1
 		#
-		
+
 		if(spawn > 0):
 			spawn -= 1
 		#
@@ -130,33 +129,32 @@ def main():
 			# else
 			i += 1
 		# while
-		
+
 		for i in range(nbrHuman):
 			[x,y] = Agents[i].GetPos()
 			plotInfo[x][y][0] = Agents[i].GetState()
 			plotInfo[x][y][1] = Agents[i].GetHealth()
 		# for
-		
+
 		diffGrid = np.zeros((fieldSize,fieldSize,3))
 
-		
 		for i in range(fieldSize):
 			for j in range(fieldSize):
 				diffGrid[i][j][0] -= gridInfo[i][j][0]*foodDiff*4
 				diffGrid[i][j][1] -= gridInfo[i][j][1]*homeDiff*4
-				
+
 				diffGrid[(i+1)%fieldSize][(j)%fieldSize][0] += gridInfo[i][j][0]*foodDiff
 				diffGrid[(i+1)%fieldSize][(j)%fieldSize][1] += gridInfo[i][j][1]*homeDiff
-				
+
 				diffGrid[(i)%fieldSize][(j-1)%fieldSize][0] += gridInfo[i][j][0]*foodDiff
 				diffGrid[(i)%fieldSize][(j-1)%fieldSize][1] += gridInfo[i][j][1]*homeDiff
-				
+
 				diffGrid[(i-1)%fieldSize][(j)%fieldSize][0] += gridInfo[i][j][0]*foodDiff
 				diffGrid[(i-1)%fieldSize][(j)%fieldSize][1] += gridInfo[i][j][1]*homeDiff
-				
+
 				diffGrid[(i)%fieldSize][(j+1)%fieldSize][0] += gridInfo[i][j][0]*foodDiff
 				diffGrid[(i)%fieldSize][(j+1)%fieldSize][1] += gridInfo[i][j][1]*homeDiff
-							
+
 				gridInfo[i][j][0] -= gridInfo[i][j][0]*0.05
 				if gridInfo[i][j][0] < 0.1:
 					gridInfo[i][j][0] = 0
@@ -164,7 +162,7 @@ def main():
 				gridInfo[i][j][1] -= gridInfo[i][j][1]*0.001
 			# for
 		# for
-		
+
 		gridInfo = gridInfo + diffGrid
 		plotW8 = 1 # how often to plot, e.i once every "plotW8" iterations
 		if it%plotW8 == 0:
@@ -181,7 +179,7 @@ def main():
 			#Save Figures	
 			#antsFigure.savefig('PLots/' + 'AntGrid_' + str(it) + '.png')
 			#antsFigure.savefig('Plots/' + 'AntGrid_' + str(it) + '.eps')
-			
+
 			Environment.PheromoneGridPlot(pheromoneFigure, subPlot1_Home, subPlot2_Food,
 										np.copy(gridInfo), fieldSize, plotDelay,  
 										pheroHomePlot, pheroFoodPlot)
@@ -189,14 +187,7 @@ def main():
 			#pheromoneFigure.savefig('Plots/' + 'PheromoneGrid_' + str(it) + '.png')
 			#pheromoneFigure.savefig('PLots/' + 'PheromoneGrid_' + str(it) + '.eps')	#
 		# if
-		
 	# for
-	
-if __name__ == '__main__':
-	main()	
-	
-	
-	
-	
-	
 
+if __name__ == '__main__':
+	main()
